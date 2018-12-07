@@ -285,7 +285,7 @@ This depends on returning data to the user
 
 **4.1 System Architecture Diagram**
 
-##
+![System Architecture Diagram](functional_spec/Images_func_spec/system_arch.PNG)
 
 
 **Fig 4.1** The above diagram illustrates the architecture of our program. As seen in the above diagram there are four main aspects of the system architecture. The user (which is the front end, what users see and input),messenger(interface for the user and chatbot), Chatbot (what the user and APIs interact with ) and the APIs (the chatbot will interact with these to retrieve desired information) all make-up the system architecture.
@@ -308,7 +308,7 @@ This will be how the user interact with the chatbot, it will act as any normal c
 
 
 
-
+![High=level Design Diagram](functional_spec/Images_func_spec/high_level_diagram.PNG)
 
 
 
@@ -355,10 +355,10 @@ Once the user is finished using the chat bot, the user can close the chat like t
 The task list contains the list of tasks that we need to accomplish in order to get the project working. The list contains the name of the task, the due date, the day the task is started, the day the task should be completed by and the name of the team member working on the specific.
 
 ### **6.2 Task List:**
-
+![Schedule Diagram](functional_spec/Images_func_spec/schedule.PNG)
 
 ### **6.2 GANTT Chart**
-
+![Gantt Chart](functional_spec/Images_func_spec/gannt.PNG)
 ## Section 7 – Appendices
 
 ### **7.1 - Resources and Research Tools:**
