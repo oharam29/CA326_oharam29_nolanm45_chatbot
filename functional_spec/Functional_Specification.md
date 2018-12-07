@@ -146,7 +146,7 @@ Entity Recognition involves taking in user input, analysing the input and tries 
 
 - **Reliability of transport services APIs**
 
-The transport service APIs are under a lot of pressure due to an overwhelming amount of real time information user requests.This resulted in the server crashing.Currently VIX, used to meassure the expected volatility of a system, is being used.The service providers have stated that additional CPU services will be implemented into the servers to deal with this issue
+The transport service APIs are under a lot of pressure due to an overwhelming amount of real time information user requests.This resulted in the server crashing.Currently VIX, used to measure the expected volatility of a system, is being used.The service providers have stated that additional CPU services will be implemented into the servers to deal with this issue
 - **Deadline**
 
 As this app involves a chatbot with entity recognition, with time the ability of the program to correctly analyse user input would improve. Also with user's feedback, we could work on and improve on any negative feedback received.
