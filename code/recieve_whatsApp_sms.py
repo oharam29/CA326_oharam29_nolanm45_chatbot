@@ -1,20 +1,20 @@
 from flask import Flask, request, redirect
 from twilio.twiml.messaging_response import MessagingResponse
-from testing import *
+from chat_bot import *
 
-app = Flask(_name_)
+app = Flask(__name__)
 
 
 @app.route("/sms", methods=["GET", "POST"])
 def sms_reply():
     msg_body = request.form['Body']
 
-    msg_body = msg_body.split()
+    #msg_body = msg_body.split()
     resp = MessagingResponse()
-    resp.message(print_trains(msg_body[0], msg_body[1]))
+    resp.message(reply(msg_body))
 
     return str(resp)
 
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     app.run(debug=True)
