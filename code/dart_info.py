@@ -123,10 +123,8 @@ def chat():
 
 
 if __name__ == '__main__':
-    s = "Howth Junction Dublin Pearse {}"
-    s = s.format("Dick")
-    print(s)
-    #print(get_trains("Howth Junction Dublin Pearse"))
+    
+    print(get_trains("Howth Junction Dublin Pearse"))
     #print(print_trains("Raheny Tara Street"))
     # print(get_trains("Howth Junction Raheny"))
     # print(get_trains("Grand Canal Dock Salthill and Monkstown"))
