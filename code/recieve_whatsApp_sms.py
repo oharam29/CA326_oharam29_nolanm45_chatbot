@@ -1,6 +1,5 @@
 from flask import Flask, request, redirect
 from twilio.twiml.messaging_response import MessagingResponse
-from chat_bot import *
 
 app = Flask(__name__)
 
