@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 
 @app.route("/")
-def disply():
+def display():
     return "<h1>Hullo</h1>"
 
 

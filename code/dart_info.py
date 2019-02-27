@@ -85,21 +85,6 @@ def get_parameters(trains, start, finish):
         return [18, "Northbound"]
 
 
-    """" 
-    if finish in malahide:
-        return [start, 7, "Malahide", "DART"]
-    elif finish in howth:
-        return [start, 7, "Howth", "DART"]
-    else:
-        if start in malahide or start and finish in stations:
-            return [start, 18, "Southbound", "DART"]
-        elif stations.index(start) > stations.index(finish):
-            return [start, 18, "Southbound", "DART"]
-        elif stations.index(start) < stations.index(finish):
-            return [start, 18, "Northbound", "DART"]
-        elif start not in stations or finish not in stations:
-            return ["Unable to get station"]
-    """
 
 def all_stations():
     r = requests.get("http://api.irishrail.ie/realtime/realtime.asmx/getAllStationsXML")
@@ -109,17 +94,6 @@ def all_stations():
         print(station_list[n])
 
 
-def chat():
-    yes = ['yes', 'yeah', 'ye', 'i am', 'si']
-    if (input('Hello there!!\nAre you travelling by train today?')) in yes:
-        if (input("Are you looking for information for a particular station?")) == 'yes':
-            stat = input("Which station?")
-            dest = input("What is your destination?")
-            find_dart_destination(stat, dest)
-    else:
-        print('Unable to help')
-
-# need to get print trains to call find station
 
 
 if __name__ == '__main__':
