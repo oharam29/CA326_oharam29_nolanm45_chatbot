@@ -1,43 +1,36 @@
 import requests
 import xml.etree.ElementTree as ET 
 
-def station(s):
-	station = ["Skerries", "Rush and Lusk", "Drogheda", "Donabate", "Malahide"]
+def print_c(text, text1):
+	stations = ["Drogheda", "Laytown", "Gormanston", "Balbriggan", "Skerries", "Rush and Lusk", "Donabate", "Malahide", "Portmarnock","Howth Junction and Donaghmede",]
+	start, finish = (text, text1)
+	if start in stations  and finish in stations:
+		if stations.index(start) > stations.index(finish):
+			direction = "Northbound"
+		elif stations.index(start) < stations.index(finish):
+			direction = "Southbound"
 
-	s = s.split()
-	for i in range(len(s)):
-		if " ".join(s[0:i]) in station:
-			return " ".join(s[0:i]), " ".join(s[i:])
+		r = requests.get('http://api.irishrail.ie/realtime/realtime.asmx/getStationDataByNameXML?StationDesc=' + start + '&NumMins=10')
+		tree = ET.fromstring(r.text)
+		call_api = [[tree[i][j].text for j in range(len(tree[i]))] for i in range(len(tree))]
 
-def print_c(text):
-	start, finish = station(text)
-
-	r = requests.get('http://api.irishrail.ie/realtime/realtime.asmx/getStationDataByNameXML?StationDesc=' + start + '&NumMins=10')
-	tree = ET.fromstring(r.text)
-	info = [[tree[i][j].text for j in range(len(tree[i]))] for i in range(len(tree))]
-
-	s = "Current trains running from {} to {}:\n".format(start, finish)
+		s = "Current trains running from {} to {}:\n".format(start, finish)
 	
-	count = 0
-	if start in ["Drogheda"]:
-		for i in range(len(info)):
-			if info[i][6] == start and info[i][19] == "Train":
-				s += "Destination: {} Expected Departure: {} Due: {} mins\n".format(info[i][7], info[i][15], info[i][12])
-				count += 1
-
-	else:
-		for i in range(len(info)):
-			if info[i][10] == 'En Route' and info[i][19] == "Train":
-				s += "Destination: {} ETA: {} Status: {}\n".format(info[i][7], info[i][14], info[i][11])
+		count = 0
+		for i in range(len(call_api)):
+			if call_api[i][10] == 'En Route' and call_api[i][18] == direction and call_api[i][19] == "Train":
+				s += "Destination: {} ETA: {} Status: {}\n".format(call_api[i][7], call_api[i][14], call_api[i][11])
 				count += 1
 
 
-	if count == 0:
-		return "No Trains Running"
+		if count == 0:
+			return "No Trains Running"
+		else:
+			return str(s)
 	else:
-		return str(s)
+		return "Invalid stations"
 
 
 if __name__ == '__main__':
     
-    print(print_c("Donabate Skerries"))
+    print(print_c(input() , input())) 
