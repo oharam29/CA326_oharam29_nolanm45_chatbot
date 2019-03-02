@@ -15,7 +15,7 @@ def disply():
 def sms_reply():
 
     req = request.get_json(silent=True, force=True)
-
+    m = " "
     result = req.get("queryResult")
     if result.get("action") == "find_trains":
         parameters = result.get("parameters")
