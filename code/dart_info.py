@@ -3,12 +3,14 @@ import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
 from googlesearch import search
 
+
 def g_search(query):
     # default fallback googles the user input
     s = "Im not sure, Here's some links I found online: \n"
     for count, j in enumerate(search(query, tld="co.in", num=3, stop=1, pause=2)):
         s += str(count+1) + ". " + j + "\n"
     return s
+
 
 def get_trains(s):
     # refines input, not needed due to entity recognition
@@ -22,7 +24,7 @@ def get_trains(s):
             return " ".join(s[0:i]), " ".join(s[i:])
 
 
-def print_trains(start,finish):
+def print_trains(start, finish):
 
     # makes request from api
     r = requests.get(

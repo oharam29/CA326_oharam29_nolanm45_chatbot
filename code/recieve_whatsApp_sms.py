@@ -15,17 +15,29 @@ def disply():
 def sms_reply():
 
     req = request.get_json(silent=True, force=True)
-    m = " "
+
     result = req.get("queryResult")
-    if result.get("action") == "find_trains":
+    action = result.get("action")
+    if action == "find_trains":
         parameters = result.get("parameters")
         station1, station2 = parameters.get("train_station"), parameters.get("train_station1")
         m = print_trains(station1,station2)
-    elif result.get("action") == "find_commuter":
+
+    elif action in ["find_commuter","find_route2","find_route3"] :
+
         parameters = result.get("parameters")
         station1, station2 = parameters.get("commuter_station"), parameters.get("commuter_station1")
-        m = print_c(station1,station2)
-    elif result.get("action") == "input.unknown":
+        if action == "find_commuter":
+            station_lst = ["Dundalk","Drogheda", "Laytown", "Gormanston", "Balbriggan", "Skerries", "Rush and Lusk", "Donabate", "Malahide", "Portmarnock","Howth Junction and Donaghmede"]
+        elif action == "find_route2":
+            station_lst = ["Longford", "Edgeworthstown", "Mullingar","Enfield","Kilock", "Maynooth" ,  "Leixlip (Louisa Bridge)", "Leixlip (Confey)", "Clonsilla", "Coolmine", "Castleknock", "Navan Road Parkway","Ashtown", "Broombridge", "Drumcondra", "Dublin Connolly"]
+        elif action == "find_route3":
+            station_lst = ["Newbridge", "Sallins", "Hazelhatch" , "Adamstown", "Clondalkin", "Cherry Orchard", "Drumcondra","Dublin Connolly","Tara Street", "Dublin Pearse", "Grand Canal Dock" ]
+
+        m = print_c(station1,station2,station_lst)
+
+
+    elif action == "input.unknown":
         m = g_search(result.get("queryText"))
 
 

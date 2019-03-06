@@ -70,6 +70,7 @@ if __name__ == '__main__':
     print("\nNorthbound\n")
     find_dart_destination("Clontarf Road", "Kilbarrack")
     print("\nSouthbound\n")
+    o
     find_dart_destination("Portmarnock", "Sandymount")
 
     chat()

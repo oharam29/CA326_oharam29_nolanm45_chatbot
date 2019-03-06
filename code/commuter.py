@@ -1,55 +1,40 @@
 import requests
-import xml.etree.ElementTree as ET 
+import xml.etree.ElementTree as ET
+from datetime import datetime, timedelta
 
-def print_c(text, text1):
-	stations = [ "Dundalk", "Drogheda", "Laytown", "Gormanston", "Balbriggan", "Skerries", "Rush and Lusk", "Donabate", "Malahide", "Portmarnock","Howth Junction and Donaghmede","Dublin Connolly", "Tara Street", "Dublin Pearse", "Grand Canal Dock", "Lansdowne Road", "Sydeny Parade", "Blackrock", "Dun Laoghaire", "Bray"]
-	
-	route1 = ["Longford", "Edgeworthstown", "Mullingar","Enfield","Kilock", "Maynooth" ,  "Leixlip (Louisa Bridge)", "Leixlip (Confey)", "Clonsilla", "Coolmine", "Castleknock", "Navan Road Parkway","Ashtown", "Broombridge", "Drumcondra", "Dublin Connolly"]
-	
-	route = ["Newbridge", "Sallins", "Hazelhatch" , "Adamstown", "Clondalkin", "Cherry Orchard", "Drumcondra","Dublin Connolly","Tara Street", "Dublin Pearse", "Grand Canal Dock" ]
-	
-	start, finish = (text, text1) 
-	if start and finish in stations:
+
+def print_c(start, finish, stations):
+
+	if start in stations and finish in stations:
 		if stations.index(start) > stations.index(finish):
 			direction = "Northbound"
 		elif stations.index(start) < stations.index(finish):
 			direction = "Southbound"
 
+		r = requests.get('http://api.irishrail.ie/realtime/realtime.asmx/getStationDataByNameXML?StationDesc=' + start + '&NumMins=10')
+		tree = ET.fromstring(r.text)
+		call_api = [[tree[i][j].text for j in range(len(tree[i]))] for i in range(len(tree))]
 
-	elif start and finish in route1:
-		if route1.index(start) > route1.index(finish):
-			direction = "Northbound"
-		elif route1.index(start) < route1.index(finish):
-			direction = "Southbound"
-	
-	elif start and finish in route:
-		if route.index(start) < route.index(finish):
-			direction = "Northbound"
-		elif route.index(start) > route.index(finish):
-			direction = "Southbound"
+		s = "Current trains running from {} to {}:\n".format(start, finish)
 
-	else:
-		return "Invalid"
-
-	r = requests.get('http://api.irishrail.ie/realtime/realtime.asmx/getStationDataByNameXML?StationDesc=' + start + '&NumMins=10')
-	tree = ET.fromstring(r.text)
-	call_api = [[tree[i][j].text for j in range(len(tree[i]))] for i in range(len(tree))]
-
-	s = "Current trains running from {} to {}:\n".format(start, finish)
-	
-	count = 0
-	for i in range(len(call_api)):
-		if call_api[i][10] == 'En Route' and call_api[i][18] == direction and call_api[i][19] == "Train":
-			s += "Destination: {} ETA: {} Status: {}\n".format(call_api[i][7], call_api[i][14], call_api[i][11])
-			count += 1
+		count = 0
+		for i in range(len(call_api)):
+			if within_half_an_hour(call_api[i][4][:-3],call_api[i][15]) and call_api[i][18] == direction and call_api[i][19] == "Train":
+				s += "Destination: {} ETA: {} Direction: {}\n".format(call_api[i][7], call_api[i][14], call_api[i][18])
+				count += 1
 
 
-	if count == 0:
-		return "No Trains Running"
-	else:
-		return str(s)
+		if count == 0:
+			return "No Trains Running"
+		else:
+			return str(s)
+
+
+def within_half_an_hour(time1, time2):
+    # compare the query time with the eta
+    return datetime.strptime(time2, "%H:%M") < (datetime.strptime(time1, "%H:%M") + timedelta(hours=1))
 
 
 if __name__ == '__main__':
-    
-    print(print_c(input() , input()))  
+
+    print(print_c(input() , input()))
