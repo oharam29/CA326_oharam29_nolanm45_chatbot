@@ -24,3 +24,5 @@ The next piece of data we received back in relation to how accurate the info the
 Many people suggested we add in the bus service as they didn't know that the API access had been denied but we informed them we would be happy to add this in in the future.
 
 Overall as a group both of us felt that the project was a success and felt that it would be something that we could carry the experience of handling a project forward with us into future projects and even into our work experience on INTRA
+
+Note: we have all the consent forms
