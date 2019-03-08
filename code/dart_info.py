@@ -25,31 +25,34 @@ def get_trains(s):
 
 
 def print_trains(start, finish):
+    try:
+        # makes request from api
+        r = requests.get(
+            'http://api.irishrail.ie/realtime/realtime.asmx/getStationDataByNameXML?StationDesc=' + start + '&NumMins=10')
+        # parses the xml to make a list of the api info
+        tree = ET.fromstring(r.text)
+        info = [[tree[i][j].text for j in range(len(tree[i]))] for i in range(len(tree))]
 
-    # makes request from api
-    r = requests.get(
-        'http://api.irishrail.ie/realtime/realtime.asmx/getStationDataByNameXML?StationDesc=' + start + '&NumMins=10')
-    # parses the xml to make a list of the api info
-    tree = ET.fromstring(r.text)
-    info = [[tree[i][j].text for j in range(len(tree[i]))] for i in range(len(tree))]
+        count = 0
+        s = "Current trains running from {} to {}:\n".format(start, finish)
+        # calls find_dart to find the parameters needed
+        result = find_dart_destination(start, finish)
 
-    count = 0
-    s = "Current trains running from {} to {}:\n".format(start, finish)
-    # calls find_dart to find the parameters needed
-    result = find_dart_destination(start, finish)
+        # builds the response by finding all trains in the info that match the parameters
+        for i in range(len(info)):
+            # will find all trains within a half an hour
+            if within_half_an_hour(info[i][4][:-3], info[i][15]) and info[i][result[0]] == result[1] and info[i][19] == "DART":
+                s += "Destination: {} ETA: {} Due: {} mins\n".format(info[i][7], info[i][14], info[i][12])
+                count += 1
 
-    # builds the response by finding all trains in the info that match the parameters
-    for i in range(len(info)):
-        # will find all trains within a half an hour
-        if within_half_an_hour(info[i][4][:-3], info[i][15]) and info[i][result[0]] == result[1] and info[i][19] == "DART":
-            s += "Destination: {} ETA: {} Due: {} mins\n".format(info[i][7], info[i][14], info[i][12])
-            count += 1
+        # if there is no trains
+        if count == 0:
+            return "No Trains Running"
+        else:
+            return s
 
-    # if there is no trains
-    if count == 0:
-        return "No Trains Running"
-    else:
-        return s
+    except ValueError:
+        return "Cannot connect to Irish rail api"
 
 
 def within_half_an_hour(time1, time2):
