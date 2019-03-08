@@ -11,17 +11,20 @@ def bus_stop(stop, route=''):
 
 
 def get_route(route_no):
-    print("One moment please")
+    try:
+        print("One moment please")
 
-    data = requests.get(
-        'https://data.smartdublin.ie/cgi-bin/rtpi/routeinformation?routeid=' + route_no + '&operator=bac').json()
-    if not data['results']:
-        print('No route information available')
-    else:
-        s = data['results'][0]['stops']
-        print("Good news, this is what I found online:")
-        for i in range(len(s)):
-            print('Stop: {} Location: {}'.format(s[i]['stopid'], s[i]['shortname']))
+        data = requests.get(
+            'https://data.smartdublin.ie/cgi-bin/rtpi/routeinformation?routeid=' + route_no + '&operator=bac').json()
+        if not data['results']:
+            print('No route information available')
+        else:
+            s = data['results'][0]['stops']
+            print("Good news, this is what I found online:")
+            for i in range(len(s)):
+                print('Stop: {} Location: {}'.format(s[i]['stopid'], s[i]['shortname']))
+    except ValueError:
+        print("Cannot connect")
 
 
 def get_all_stops():
@@ -42,5 +45,5 @@ def chat():
 
 
 if __name__ == '__main__':
-    #get_route('31')
-    chat()
+    get_route('31')
+    #chat()
