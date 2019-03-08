@@ -34,7 +34,7 @@ def print_trains(start, finish):
         info = [[tree[i][j].text for j in range(len(tree[i]))] for i in range(len(tree))]
 
         count = 0
-        s = "Current trains running from {} to {}:\n".format(start, finish)
+        s = "Current trains running from {} to {} (within the next 30 minutes):\n".format(start, finish)
         # calls find_dart to find the parameters needed
         result = find_dart_destination(start, finish)
 
@@ -47,7 +47,7 @@ def print_trains(start, finish):
 
         # if there is no trains
         if count == 0:
-            return "No Trains Running"
+            return "No trains running within the next 30 minutes"
         else:
             return s
 

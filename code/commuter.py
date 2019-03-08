@@ -15,7 +15,7 @@ def print_c(start, finish, stations):
 			tree = ET.fromstring(r.text)
 			call_api = [[tree[i][j].text for j in range(len(tree[i]))] for i in range(len(tree))]
 
-			s = "Current trains running from {} to {}:\n".format(start, finish)
+			s = "Current trains running from {} to {} (withing the next 30 minutes):\n".format(start, finish)
 
 			count = 0
 			for i in range(len(call_api)):
@@ -24,7 +24,7 @@ def print_c(start, finish, stations):
 					count += 1
 
 			if count == 0:
-				return "No Trains Running"
+				return "No trains running within the next 30 minutes"
 			else:
 				return str(s)
 
