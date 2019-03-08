@@ -1,1 +1,1 @@
-** Here is a link to our blog: ** https://oharam29.home.blog/
+ Here is a link to our blog: https://oharam29.home.blog/
