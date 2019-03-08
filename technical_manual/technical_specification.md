@@ -109,6 +109,7 @@ XML (Extensible Mark-up Language) is a mark-up language that defines a set of ru
 Figure 2.
 
  ![Updated System Architecture Diagram](technical_manual/tech_manual_images/sys_arch.png)
+ 
 **2.2 Irish Rail API&#39;s**
 
 The APIs are used in order to gather the data about public transport services, they take in the station and can return all the train, in XML format, that are going to serve that station in the next 90 minutes. The XML returned is comprised of twenty-one pieces of information for each train. This contains information relating such as train destination, origin, Estimated time arrivals and departure.
